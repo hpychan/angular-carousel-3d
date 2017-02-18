@@ -1,7 +1,7 @@
 /*!
  * Name: angular-carousel-3d
  * GIT Page: https://github.com/Wlada/angular-carousel-3d
- * Version: 0.1.1 - 2016-05-30T20:01:50.496Z
+ * Version: 0.3.0 - 2017-02-18T02:03:38.531Z
  * License: MIT
  */
 
@@ -217,10 +217,12 @@
 
             if(carousel3d.autoRotationSpeed > 0) {
                 vm.autoRotation = $interval(function() {
-                    if(vm.dir === 'rtl') {
-                        vm.goPrev();
-                    } else {
-                        vm.goNext();
+                    if (!vm.autoRotationLocked){
+                        if(vm.dir === 'rtl') {
+                            vm.goPrev();
+                        } else {
+                            vm.goNext();
+                        }
                     }
                 }, carousel3d.autoRotationSpeed);
             }
@@ -398,7 +400,7 @@
         var carousel3d = {
             restrict: 'AE',
             template: '' +
-            '<div class=\"carousel-3d-container\" ng-switch="vm.isLoading">' +
+            '<div class=\"carousel-3d-container\" ng-switch="vm.isLoading" ng-mouseenter="vm.autoRotationLocked=true" ng-mouseleave="vm.autoRotationLocked=false">' +
             '   <div class="carousel-3d-loader" ng-switch-when=\"true\">' +
             '       <div class=\"carousel-3d-loader-circle\" style=\"-webkit-transform:scale(0.75)\"><div><div></div><div></div></div></div>' +
             '       <div class="carousel-3d-loader-percentage">{{ vm.percentLoaded }}</div>' +
